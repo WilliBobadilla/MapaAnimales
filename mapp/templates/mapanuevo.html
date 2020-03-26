@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <style>
+    #mapid {
+      height: 480px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <a href="/logout" title="Logout">Salir</a>
+
+  <h1>Adopta, cambia una sonrisa</h1>
+  <div>
+    <h2> Mapa de los animales adoptados </h2>
+  </div>
+  <div>
+      <h2>Cantidad de animales adoptados: </h2>
+  </div>
+  <div id="mapid"></div>
+  <div id="formulario" style="display:none ">
+    <!-- onsubmit="subir(this,event)" -->
+    <form method="POST" id="formulario" onsubmit="subir(this,event)">
+      {% csrf_token %}
+
+      <label for="fname">Nombre:</label><br>
+      <input type="text" id="nombre" name="nombre"><br>
+
+      <label for="fname">Apellido:</label><br>
+      <input type="text" id="apellido" name="apellido"><br>
+
+      <label for="lname">Edad de la persona:</label><br>
+      <input type="number" id="edad" name="edad"><br>
+
+      <label for="lname">Fecha de adopcion:</label><br>
+      <input type="date" id="fecha" name="fecha"><br>
+
+      <label for="lname">Descripcion:</label><br>
+      <input type="text" id="descripcion" name="descripcion"><br>
+
+      <label for="lname">Animal adoptado:</label><br>
+      <select id="select_animal">
+        <option value="Gato">Gato</option>
+        <option value="Perro" selected>Perro</option>
+        <option value="Gallo">Gallo</option>
+      </select><br>
+
+      <label for="lname">Sexo del animal:</label><br>
+      <select id="select_sexo">
+        <option value="Gato">Macho</option>
+        <option value="Perro" selected>Hembra</option>
+      </select><br>
+
+      <label for="lname">Edad del animal en meses:</label><br>
+      <input type="number" id="edad_animal" name="edad_animal"><br>
+
+
+
+      <label for="lname">Cantidad de mascotas actuales:</label><br>
+      <input type="number" id="cant_animales" name="cant_animales"><br>
+      <input type="submit" value="Subir">
+    </form>
+  </div>
+
+
+
+  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+  <script>
+
+    var datos1 = ' ';
+    datos1 = JSON.stringify("{{data|escapejs}}");
+
+    // console.log("antes: " +datos1);
+    datos1 = datos1.replace(/'/g, '"'); // cambiamos todas las '  por " 
+    datos1 = datos1.replace('"', ' '); //sacamos el primer  " 
+    datos1 = datos1.substring(0, datos1.length - 1); // sacamos el ultimo  "
+    // console.log("despues de al conversion: " +datos1);
+    var hola = ' [{"descripcion": "Hola1", "precio": "hola","ubicacion": {"latitud": -25.34,"longitud": -57.54}} ] ';
+    //  console.log("contruccion: " +hola);
+    var prueba = JSON.parse(datos1);
+    //  console.log("tipos: "+typeof(prueba));
+    datos = prueba;
+    var plano = new Array();
+    var index = 0; //para recorrer la lista
+    var lista_aux = new Array();
+    for (index = 0; index < datos.length; index++) {
+      //console.log(index);  
+      // console.log(lista_aux);
+      lista_aux = ['<p class="descripcion">' + datos[index].nombre + "</p>" + '<span class="precio">' +datos[index].apellido + " <br>"+  datos[index].descripcion  +  "</span>", datos[index].ubicacion.latitud, datos[index].ubicacion.longitud];
+      plano.push(lista_aux);// agregamos al array
+    }
+    // console.log(plano);
+    var mymap = L.map('mapid').setView([-25.3381, -57.5423], 8);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+
+
+
+    for (var i = 0; i < plano.length; i++) {
+      marker = new L.marker([plano[i][1], plano[i][2]])
+        .bindPopup(plano[i][0])
+        .addTo(mymap);
+    }
+
+    var localizacion; // variable global
+    // vemos ahora para agregar un popup
+    mymap.on('click', addMarker);
+    function addMarker(e) {
+      var formu = document.getElementById('formulario').innerHTML; // sacamo el formulario
+      //console.log(document.getElementById('formulario').getAttribute('id')  ) ;
+      // Add marker to map at click location; add popup window
+      var newMarker = new L.marker(e.latlng).bindPopup(formu).openPopup().addTo(mymap);
+      localizacion = e.latlng;
+    }
+
+    function subir() {
+      // lo que viene abajo es la extraccion de datos del form 
+      var nombre = document.getElementById('nombre').value;
+      var apellido = document.getElementById('apellido').value;
+      var edad = document.getElementById('edad').value;
+      var fecha=document.getElementById('fecha').value;
+      var descripcion=document.getElementById('descripcion').value;
+      var animal = document.getElementById('select_animal').value;
+      console.log('esta es el animal seleccionado' + animal);
+      var sexo = document.getElementById('select_sexo').value;
+      var edad_animal=document.getElementById('edad_animal').value;
+      var cant_animales = document.getElementById('cant_animales').value;
+      console.log(nombre + apellido + edad + sexo + cant_animales);
+
+      console.log('localizacion es: ' + localizacion);
+      var latitud = localizacion.lat; // sacamos la latitud 
+      var longitud = localizacion.lng;  //sacamos la longitud 
+      console.log('laitud' + latitud)
+      // hacemos el post al server con esa url 
+      $.post("nueva_adopcion",
+        {
+          nombre: nombre,
+          apellido: apellido,
+          edad: edad,
+          fecha:fecha,
+          descripcion:descripcion,
+          sexo: sexo,
+          edad_animal:edad_animal,
+          animal: animal,
+          cant_animales: cant_animales,
+          latitud: latitud,
+          longitud: longitud
+
+
+        },
+        function (data, status) {
+          alert("  Agregado correctamente ");  // manejamos la respuesta
+
+        });
+
+
+
+
+
+
+    }
+
+
+  </script>
+
+</body>
+
+</html>
