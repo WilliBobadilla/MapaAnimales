@@ -142,6 +142,8 @@
     var localizacion; // variable global
     // vemos ahora para agregar un popup
     mymap.on('click', addMarker);
+    L.DomEvent.addListener(mymap, "touchstart", addMarker);
+
     function addMarker(e) {
       var formu = document.getElementById('formulario').innerHTML; // sacamo el formulario
       //console.log(document.getElementById('formulario').getAttribute('id')  ) ;

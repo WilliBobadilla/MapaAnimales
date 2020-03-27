@@ -82,6 +82,9 @@
         // console.log(plano);
         var mymap = L.map('mapid').setView([-25.3381, -57.5423], 8);
 
+
+
+
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
@@ -91,7 +94,7 @@
                 .bindPopup(plano[i][0])
                 .addTo(mymap);
         }
-
+       
 
 
     </script>
