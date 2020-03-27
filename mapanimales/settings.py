@@ -12,11 +12,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-
+import platform
 
 # for heroku deploy 
-import dj_database_url  
-import dotenv
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -32,7 +31,7 @@ SECRET_KEY = '1^h=@mepw)91b3r%5u2_%j7scsgfb93wn@oizk8yavr-44vfpg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,22 +82,23 @@ WSGI_APPLICATION = 'mapanimales.wsgi.application'
 
 #here we have to change to deploy in heroku 
 #para el config online, se deja este asi
+plataforma=platform.platform() # sacamos el SO, heroku tiene en su descripcion aws,
+# eso nos sirve para comprobar que esta corriendo en la nube
+if plataforma.find('aws')>=0: # esta en la nube
+    import dj_database_url  
+    import dotenv
+    DATABASES = {}
+    DATABASES['default'] = dj_database_url.config()
+else:
+    # this is for local deploy
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
-
-
-
-# this is for local deploy
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
 
-'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
