@@ -2,71 +2,90 @@
 <html lang="en">
 
 <head>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-  <style>
-    #mapid {
-      height: 480px;
-    }
-  </style>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+   
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+   
+
+
+    <style>
+        #mapid {
+            height: 480px;
+        }
+    </style>
 </head>
 
 <body>
     <a href="/logueo" title="Login">Entrar al sistema</a>
-  <a href="/logout" title="Logout">Salir</a>
+    <a href="/logout" title="Logout">Salir</a>
 
-  <h1>Adopta, cambia una sonrisa</h1>
-  <div>
-    <h2> Mapa de los animales adoptados </h2>
-    
-  </div>
-  <div id="mapid"></div>
+    <h1>Adopta, cambia una sonrisa</h1>
+    <div>
+        <h2> Mapa de los animales adoptados </h2>
 
-
-  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-
-  <script>
-
-    var datos1 = ' ';
-    datos1 = JSON.stringify("{{data|escapejs}}");
-
-    // console.log("antes: " +datos1);
-    datos1 = datos1.replace(/'/g, '"'); // cambiamos todas las '  por " 
-    datos1 = datos1.replace('"', ' '); //sacamos el primer  " 
-    datos1 = datos1.substring(0, datos1.length - 1); // sacamos el ultimo  "
-    // console.log("despues de al conversion: " +datos1);
-    var hola = ' [{"descripcion": "Hola1", "precio": "hola","ubicacion": {"latitud": -25.34,"longitud": -57.54}} ] ';
-    //  console.log("contruccion: " +hola);
-    var prueba = JSON.parse(datos1);
-    //  console.log("tipos: "+typeof(prueba));
-    datos = prueba;
-    var plano = new Array();
-    var index = 0; //para recorrer la lista
-    var lista_aux = new Array();
-    for (index = 0; index < datos.length; index++) {
-      //console.log(index);  
-      // console.log(lista_aux);
-      lista_aux = ['<p class="descripcion">' + datos[index].nombre + "</p>" + '<span class="precio">' +datos[index].apellido + " <br>"+  datos[index].descripcion  +  "</span>", datos[index].ubicacion.latitud, datos[index].ubicacion.longitud];
-      plano.push(lista_aux);// agregamos al array
-    }
-    // console.log(plano);
-    var mymap = L.map('mapid').setView([-25.3381, -57.5423], 8);
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mymap);
-
-    for (var i = 0; i < plano.length; i++) {
-      marker = new L.marker([plano[i][1], plano[i][2]])
-        .bindPopup(plano[i][0])
-        .addTo(mymap);
-    }
+    </div>
+    <div id="mapid"></div>
 
 
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
-  </script>
+    <script>
+
+        var datos1 = ' ';
+        datos1 = JSON.stringify("{{data|escapejs}}");
+
+        // console.log("antes: " +datos1);
+        datos1 = datos1.replace(/'/g, '"'); // cambiamos todas las '  por " 
+        datos1 = datos1.replace('"', ' '); //sacamos el primer  " 
+        datos1 = datos1.substring(0, datos1.length - 1); // sacamos el ultimo  "
+        // console.log("despues de al conversion: " +datos1);
+        var hola = ' [{"descripcion": "Hola1", "precio": "hola","ubicacion": {"latitud": -25.34,"longitud": -57.54}} ] ';
+        //  console.log("contruccion: " +hola);
+        var prueba = JSON.parse(datos1);
+        //  console.log("tipos: "+typeof(prueba));
+        datos = prueba;
+        var plano = new Array();
+        var index = 0; //para recorrer la lista
+        var lista_aux = new Array();
+        for (index = 0; index < datos.length; index++) {
+            //console.log(index);  
+            // console.log(lista_aux);
+            lista_aux = ['<h2>N°:'+datos[index].id +'</h2>'  + '<h3>' +datos[index].nombre + ' ' + datos[index].apellido +  "</h3>" + ' <p>' +datos[index].descripcion+'</p>' ,  datos[index].ubicacion.latitud, datos[index].ubicacion.longitud];
+            plano.push(lista_aux);// agregamos al array
+        }
+        // console.log(plano);
+        var mymap = L.map('mapid').setView([-25.3381, -57.5423], 8);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        for (var i = 0; i < plano.length; i++) {
+            marker = new L.marker([plano[i][1], plano[i][2]])
+                .bindPopup(plano[i][0])
+                .addTo(mymap);
+        }
+
+
+
+    </script>
 
 </body>
 

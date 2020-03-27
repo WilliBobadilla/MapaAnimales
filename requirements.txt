@@ -1,0 +1,8 @@
+  
+Django==2.2.2
+gunicorn
+whitenoise==3.3.1
+psycopg2==2.8.3
+python-dotenv==0.10.3
+dj_database_url
+xlsxwriter

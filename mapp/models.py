@@ -6,7 +6,7 @@ from django.utils import timezone
 # Create your models here.
 class Datos(models.Model):
     identificativo= models.AutoField(primary_key=True)
-    id= models.CharField(default=0,max_length=40 )  
+    id= models.CharField(default=0,max_length=40)  
     #identificativo del material, puede tener texto 
     nombre=models.CharField(max_length=40)
     apellido=models.CharField (max_length=40)
@@ -22,7 +22,7 @@ class Datos(models.Model):
     
     
 
-    imagen=models.ImageField(upload_to = 'imagenes/', default = 'imagenes/None/no-img.jpg')
+    imagen=models.ImageField(upload_to = 'images/', default = 'imagenes/None/no-img.jpg')
 
 
 
