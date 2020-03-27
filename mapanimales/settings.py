@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'mapanimales.urls'
@@ -89,6 +90,15 @@ if plataforma.find('aws')>=0: # esta en la nube
     import dotenv
     DATABASES = {}
     DATABASES['default'] = dj_database_url.config()
+    #static files
+    STATICFILES_DIRS = []
+    # (
+    #       os.path.join(BASE_DIR, 'static'),
+    #  )
+
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
 else:
     # this is for local deploy
 
