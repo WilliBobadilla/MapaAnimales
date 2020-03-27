@@ -7,45 +7,75 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
 	<title>Inventario - Login</title>
 	
-	
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,600" rel="stylesheet" type="text/css">
-	<link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+	<link href="/static/style/style.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	<!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,600" rel="stylesheet" type="text/css"> -->
+	<!-- <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" /> -->
 	
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
      <!-- Latest compiled and minified CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 
    <!-- Optional theme -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
    
    <!-- Latest compiled and minified JavaScript -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
    
 </head>
-<body>
-	<div id="center"></div>
+<body class = "align">
 	
+	<!-- <div id="logo">
+			<img src="/static/logo.png" />
+		</div> -->
 	<div id="content">
-		<div id="logo">
-			<img src="/static/img/perro1.jpg" width="225" height="75" alt="Invento" />
-		</div>
+
+		<form action="solicitud_login" method="POST" class="form login" name="logueo">
+			{% csrf_token %}
+			
+			<div class="form__field">
+			  
+				<label for="login__username">
+				  	<i class="fa fa-user" style="font-size: 1.5rem;"></i>
+					<span class="hidden">Usuario</span>
+				</label>
+				  
+				<input id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
+			
+			</div>
+
+			<div class="form__field">
+
+				<label for="login__password">
+					<i class="fa fa-lock" style="font-size: 1.5rem;"></i>
+					<span class="hidden">Password</span></label>
+				<input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
+			  
+			</div>
 		
-		<div id="login">
+			  <div class="form__field">
+				<input type="submit" name="Enviar" value="Ingresar">
+			  </div>
+		
+			</form>
+
+<!-- CODIGO VIEJO DE WILL -->
+
+		<!-- <div id="login">
 			<div id="error"></div>
 			<form method="POST" action="solicitud_login" name="logueo">
 			{% csrf_token %}
 			
 			 USUARIO:<br />
 				<input type="text" name="username" /><br />
-				CONTRASEÑA:<br />
-				<input type="password" name="password" /><br /> 
-<!-- 				
-				 {{ form.as_p }} -->
-				<input type="submit" name="enviar" value="Ingresar" />
+			CONTRASEÑA:<br />
+				<input type="password" name="password" /><br />  -->
+<!--  {{ form.as_p }} -->
+				<!-- <input type="submit" name="enviar" value="Ingresar" />
 			</form>
-		</div>
+		</div> -->
 	</div>
 </body>
 </html>
