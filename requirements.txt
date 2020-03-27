@@ -7,4 +7,3 @@ python-dotenv==0.10.3
 dj_database_url
 xlsxwriter
 Pillow
-PIL
