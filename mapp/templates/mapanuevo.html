@@ -148,7 +148,7 @@
       var formu = document.getElementById('formulario').innerHTML; // sacamo el formulario
       //console.log(document.getElementById('formulario').getAttribute('id')  ) ;
       // Add marker to map at click location; add popup window
-      var newMarker = new L.marker(e.latlng).bindPopup(formu).openPopup().addTo(mymap);
+      var newMarker = new L.marker(e.latlng).bindPopup(formu).addTo(mymap).openPopup();
       localizacion = e.latlng;
     }
 
@@ -191,10 +191,6 @@
           alert("  Agregado correctamente ");  // manejamos la respuesta
 
         });
-
-
-
-
 
 
     }
