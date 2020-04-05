@@ -61,19 +61,16 @@
         datos1 = datos1.replace(/'/g, '"'); // cambiamos todas las '  por " 
         datos1 = datos1.replace('"', ' '); //sacamos el primer  " 
         datos1 = datos1.substring(0, datos1.length - 1); // sacamos el ultimo  "
-        // console.log("despues de al conversion: " +datos1);
-        var hola = ' [{"descripcion": "Hola1", "precio": "hola","ubicacion": {"latitud": -25.34,"longitud": -57.54}} ] ';
-        //  console.log("contruccion: " +hola);
         var prueba = JSON.parse(datos1);
-        //  console.log("tipos: "+typeof(prueba));
+       
         datos = prueba;
         var plano = new Array();
         var index = 0; //para recorrer la lista
         var lista_aux = new Array();
         for (index = 0; index < datos.length; index++) {
-            //console.log(index);  
-            // console.log(lista_aux);
-            lista_aux = ['<h2>N°:'+datos[index].id +'</h2>'  + '<h3>' +datos[index].nombre + ' ' + datos[index].apellido +  "</h3>" + ' <p>' +datos[index].descripcion+'</p>' ,  datos[index].ubicacion.latitud, datos[index].ubicacion.longitud];
+            var ima= '<img src="' + datos[index].url + '"height=40% width=50% >';
+            console.log(ima);
+            lista_aux = ['<h2>N°:'+datos[index].id +'</h2>'  + '<h3>' +datos[index].nombre + ' ' + datos[index].apellido +  "</h3>" + ' <p>' +datos[index].descripcion+'</p>'+ima ,  datos[index].ubicacion.latitud, datos[index].ubicacion.longitud];
             plano.push(lista_aux);// agregamos al array
         }
         // console.log(plano);
