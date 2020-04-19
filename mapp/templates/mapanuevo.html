@@ -53,7 +53,7 @@
   <div id="mapid"></div>
   <div id="formulario" style="display:none ">
     <!-- onsubmit="subir(this,event)" -->
-    <form method="POST" id="formulario" onsubmit="subir(this,event)" enctype="multipart/form-data">
+    <form method="POST" id="formulario" enctype="multipart/form-data" action="nueva_adopcion">
       {% csrf_token %}
 
       <label for="fname">Nombre:</label><br>
@@ -72,16 +72,16 @@
       <input type="text" id="descripcion" name="descripcion"><br>
 
       <label for="lname">Animal adoptado:</label><br>
-      <select id="select_animal">
+      <select id="select_animal" name="select_animal">
         <option value="Gato">Gato</option>
         <option value="Perro" selected>Perro</option>
         <option value="Gallo">Gallo</option>
       </select><br>
 
       <label for="lname">Sexo del animal:</label><br>
-      <select id="select_sexo">
-        <option value="Gato">Macho</option>
-        <option value="Perro" selected>Hembra</option>
+      <select id="select_sexo" name="select_sexo">
+        <option value="Macho">Macho</option>
+        <option value="Hembra" selected>Hembra</option>
       </select><br>
 
       <label for="lname">Edad del animal en meses:</label><br>
@@ -92,13 +92,16 @@
 
       <label for="lname">Imagen de la mascota:</label><br>
         <input type="file"  name="imagen" placeholder="Imagen *" >
+
+        <input type="text" id="latitud" name="latitud"> <br>
+        <input type="text" id="longitud" name="longitud"> <br>
       <input type="submit" value="Subir">
     </form>
   </div>
 
 
 
-  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+  <!-- <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script> -->
 
   <script>
 
@@ -148,8 +151,13 @@
       var formu = document.getElementById('formulario').innerHTML; // sacamo el formulario
       //console.log(document.getElementById('formulario').getAttribute('id')  ) ;
       // Add marker to map at click location; add popup window
-      var newMarker = new L.marker(e.latlng).bindPopup(formu).openPopup().addTo(mymap);
+      var newMarker = new L.marker(e.latlng).bindPopup(formu).addTo(mymap).openPopup(); // abre en el mapa
       localizacion = e.latlng;
+      var latitud = localizacion.lat; // sacamos la latitud 
+      var longitud = localizacion.lng;  //sacamos la longitud 
+      document.getElementById("latitud").value= latitud;
+      document.getElementById("longitud").value=longitud;
+
     }
 
     function subir() {
