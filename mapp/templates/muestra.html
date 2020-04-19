@@ -28,20 +28,22 @@
    
    <!-- Latest compiled and minified JavaScript -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-   
+   <link href="/static/style/muestra.css" rel="stylesheet" type="text/css">
 
 
-    <style>
-        #mapid {
-            height: 480px;
-        }
-    </style>
+
 </head>
 
 <body>
-    <a href="/logueo" title="Login">Entrar al sistema</a>
-    <a href="/logout" title="Logout">Salir</a>
-
+  <header class="header"> 
+       <nav> <a href="/static/img/logo.png" class="logo">Mapa de Animales</a>
+        <div class="header-right">
+          <a class="active" title= "Login" href="/logueo">Entrar al sistema</a>
+          <a href="/logout" title="Logout">Salir</a>
+        </div>
+      <!-- <a href="/logueo" title="Login">Entrar al sistema</a>
+    <a href="/logout" title="Logout">Salir</a> -->
+</nav></header>
     <h1>Adopta, cambia una sonrisa</h1>
     <div>
         <h2> Mapa de los animales adoptados </h2>
