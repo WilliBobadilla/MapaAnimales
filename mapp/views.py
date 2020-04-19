@@ -140,6 +140,16 @@ def solicitud(request):
     return render(request,"mensaje.html",data )# respondemos con un mensaje
 
 
+def publicar_animal(requests):
+    """
+    Utilizado para publicar nuevos animales \n
+    en la pagina principal 
+    """
+    pass
+
+def
+
+
 def consulta_datos():
     todos= Datos.objects.all()
     return todos
