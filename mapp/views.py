@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import os 
 from django.contrib.auth import authenticate, login,logout
 
-from .forms import ImageUploadForm
+from .forms import UploadImageForm
 
 from mapanimales.settings import MEDIA_URL
 from django.core.files.storage import FileSystemStorage
@@ -22,7 +22,6 @@ import platform
 def solcitud_login(request):
     """
     Aca se manejan las solicitudes de login 
-    
     """
     username = request.POST['username']
     password = request.POST['password']
@@ -44,14 +43,17 @@ def logout_request(request):
     # Redirect to a success page.
     return HttpResponseRedirect("/")
 
+def home(request):
+    """
+    is not necesary to be loged
+    """
+    return render( request, 'index.html')
 
-def inicio(request):
+def inicio_mapa(request):
     if not request.user.is_authenticated:
         return render(request,'login.html')
     datos_adopciones=consulta_datos()
-    print(datos_adopciones)
-    print('informacino el SO' )
-    print(platform.platform()  )
+
     lista=[ ]
     for item in datos_adopciones:
         cada_dato={"id":item.identificativo ,"nombre": item.nombre, "apellido": item.apellido,
@@ -71,23 +73,29 @@ def muestra_datos(request):
     print(datos_adopciones)
     lista=[ ]
     for item in datos_adopciones:
-        #link= "file://"+settings.BASE_DIR +"/media/" + str(item.imagen)
         link= item.imagen.url   
         print(link)
-        cada_dato={ "id":item.identificativo  , "nombre": item.nombre, "apellido": item.apellido,"url":link,
+        cada_dato={ "id":item.identificativo, "nombre": item.nombre, "apellido": item.apellido,"url":link,
                     "sexo": item.sexo, "animal": item.animal,"descripcion": item.descripcion,
                       "ubicacion": {"latitud": item.latitud,
                                      "longitud": item.longitud
                                     }}
         lista.append(cada_dato) # agregamos a la lista
 
-    data = {"data": lista} # al final enviamos esto 
+    data = {"data": lista,"cantidad_adoptados":len(datos_adopciones)} # al final enviamos esto 
     
     return render(request, "muestra.html", data) 
 
 
 
-
+def formulario_posteo(request):
+    if not request.user.is_authenticated:
+        return render(request,'login.html')
+    if request.method=='POST':
+        print('posteo ')
+        return render(request,"formulario_posteo.html")
+    else: 
+        return render(request,"formulario_posteo.html")
 
 def solicitud(request):
     """
@@ -105,16 +113,12 @@ def solicitud(request):
             print("ultimo id", ultimo_id)
         except:
             ultimo_id=1
-
         datos.id=ultimo_id  # le asignamos este id 
         #imagenes tratamiento
         #nombre_archivo= datos.get('identificativo') 
-        myfile = request.FILES['imagen']
-        fs = FileSystemStorage()
-        extension_archivo= str(myfile.name).split(".")[1]
-        print("extension",extension_archivo)
-        nombre_archivo=str(ultimo_id)+"."+extension_archivo
-        filename = fs.save(nombre_archivo, myfile)
+        imagen=UploadImageForm(request.POST, request.FILES)
+        if imagen.is_valid():
+            datos_a_guardar.imagen=imagen.cleaned_data['imagen']
         #una vez obtenidos los datos, debemos de guardarlos, 
         # creo que hay una forma de guardar directamente un 
         # pero es lo mas rapido que se me ocurrio 
@@ -130,7 +134,7 @@ def solicitud(request):
         datos_a_guardar.cant_animales=datos.get('cant_animales')
         datos_a_guardar.latitud=float(datos.get('latitud')) # conversion a flotante 
         datos_a_guardar.longitud=float(datos.get('longitud'))
-        datos_a_guardar.imagen=nombre_archivo # le ponemos para relacionar el nombre con el id  
+        
         datos_a_guardar.save() # guardamos los valores 
         data = {
         }
@@ -147,7 +151,6 @@ def publicar_animal(requests):
     """
     pass
 
-def
 
 
 def consulta_datos():

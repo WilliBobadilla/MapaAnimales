@@ -23,11 +23,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('solicitud_login', views.solcitud_login),
-    path('', views.muestra_datos),
+    path('', views.home),
     path('logueo',views.index),
-    path('inicio', views.inicio, name='inicio'),
+    path('inicio', views.inicio_mapa, name='inicio'),
     path('nueva_adopcion', views.solicitud),
     path('logout', views.logout_request),
+    path('muestradatos', views.muestra_datos),
+    path('formulario_posteo', views.formulario_posteo),
 
 ]
 if settings.DEBUG:
