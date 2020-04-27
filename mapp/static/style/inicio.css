@@ -2,11 +2,12 @@
   margin: 0;
   padding: 0;
   font-family: Century Gothic;
+  scroll-behavior: smooth;
 
 }
 
 header{
-  background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../img/1.jpg);
+  background-image: linear-gradient(rgba(31, 41, 51,0.5),rgba(31, 41, 51,0.5)), url(../img/1.jpg);
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -53,7 +54,6 @@ h2.section_title {
   font-size: 50px;
   margin: 60px 50px;
   font-weight: 600;
-  font-family: 'Oleo Script', cursive;
 }
 
 #startscreen {
@@ -61,9 +61,8 @@ h2.section_title {
   padding-top: 65px;
   min-height: 500px;
   font-weight: bold;
-  color: #ffffff;
+  color: #F5F7FA;
   text-align: center;
-
 }
 
 .title{
@@ -74,15 +73,15 @@ h2.section_title {
 }
 
 .title h1{
-  color: #000;
+  color: #2BB0ED;
   font-size: 70px;
-  text-shadow: 1px 1px 3px #010101;
+  text-shadow: 1px 1px 3px #1F2933;
 } 
 
 .title a{
     display: block;
     text-decoration: none;
-    color: #ffffff;
+    color: #F5F7FA;
     margin: 50px auto;
     padding: 5px 0;
     font-size: 30px;
@@ -90,58 +89,58 @@ h2.section_title {
 }
 
 .title a:hover{
-  color: #010101;
+  color: #2BB0ED;
   text-decoration: none;
 }
 
-/* $color-main: #010101;
-$color-white: #ffffff;
-$color-name: #FFA400;
-$color-blue: #009FFD;
-$color-blue-dark: #1C77C3; */
- /* Top Navigation */
+/* Dark gray : #1F2933
+  White : #F5F7FA 
+  sky blue : #2BB0ED
+*/
+
+/* Top Navigation */
 .navbar.navbar-inverse {
-  background: #010101!important;
+  background: #1F2933!important;
 }
 .navbar-header * {
-  color: #ffffff!important;
+  color: #F5F7FA!important;
 }
 .navbar-brand {
-  
-  font-family: 'Oleo Script', cursive;
   font-weight: bold;
-  font-size: 20px;
-  color: #FFA400!important;
+  font-size: 25px;
+  padding: 7px!important;
+  margin: 0px!important;
+  color: #2BB0ED!important;
 }
-
 .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
-  background-color: #010101;
+  background-color: #1F2933;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: #ffffff!important;
+  background-color: #F5F7FA!important;
 }
 .navbar-inverse .navbar-nav>li>a {
   font-size: 16px;
-  color: white;
+  color: #F5F7FA;
   font-weight: 600;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
 }
 .navbar-inverse .navbar-nav>li>a:hover,
 .navbar-inverse .navbar-nav>.active>a:hover,
 .navbar-inverse .navbar-nav>.active>a:focus,
 .navbar-inverse .navbar-nav>.active>a {
-  color: #010101;
-  background-color: #ffffff;
+  color: #1F2933;
+  background-color: #F5F7FA;
 }
 .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
-  background-color: #010101;
-  color: #ffffff;
+  background-color: #1F2933;
+  color: #F5F7FA;
 }
 
 #about {
-  background: #010101;
+  min-height: 500px;
+  background: #1F2933;
   padding: 0 0 60px;
-  color: #ffffff;
+  color: #F5F7FA;
 }
 #about p {
   font-size: 30px;
@@ -151,7 +150,7 @@ $color-blue-dark: #1C77C3; */
   width: 100%;
   max-width: 250px;
   /* border-radius: 50%;
-  border: 7px #ffffff solid; */
+  border: 7px #F5F7FA solid; */
 }
 #about span {
   font-size: 30px;
@@ -161,18 +160,19 @@ $color-blue-dark: #1C77C3; */
 }
 
 #portfolio {
+  min-height: 500px;
   padding-bottom: 50px;
   text-align: center;
 }
 #portfolio h2 {
-  color: #010101;
+  color: #1F2933;
 }
 
 .project-wrap a{
   background:black;
   display: block;
   border-radius: 5px;
-  color: #ffffff;
+  color: #F5F7FA;
   max-width: 400px;
   margin: 20px auto;
 
@@ -204,13 +204,14 @@ $color-blue-dark: #1C77C3; */
 .project-wrap a:hover, a:focus {
   text-decoration: none!important;
   background: #FFA400;
-  color: #010101;
-  box-shadow: 0px 0px 7px 1px lighten(#010101, 50%);
+  color: #1F2933;
+  box-shadow: 0px 0px 7px 1px lighten(#1F2933, 50%);
 }
 
 #contacts {
-  min-height: 400px;
-  color: #ffffff;
+  min-height: 500px;
+
+  color: #F5F7FA;
   background: url(https://picsum.photos/id/99/1000) center center;
   background-size: cover;
   background-attachment: fixed;
@@ -220,14 +221,14 @@ $color-blue-dark: #1C77C3; */
   display: block;
   padding: 7px 12px;
   text-decoration: none;
-  color: #010101;
+  color: #1F2933;
 }
 #contacts a i {
     transition: all 0s;
     margin-right: 5px;
 }
 #contacts a i:hover {
-    color: #ffffff;
+    color: #F5F7FA;
 }
 
 
@@ -239,7 +240,7 @@ $color-blue-dark: #1C77C3; */
   margin-bottom: 5px;
 }
 .email a {
-    color: #ffffff;
+    color: #F5F7FA;
     font-weight: 600;
     text-decoration: none;
 }
@@ -252,19 +253,21 @@ $color-blue-dark: #1C77C3; */
   font-weight: bold;
   margin: 20px 10px 10px;
   border-radius: 10px;
-  background: #ffffff;
+  background: #F5F7FA;
   
 }
 
 #copy {
-  background: lighten($color-main, 100%);
-  .copy {
-    text-align: left;
-    font-size: 15px;
-    font-weight: bold;
-    margin: 10px 0;
-    color: $color-main;
-  }
+  background: lighten(#101010, 100%);
+ 
+}
+
+.copy {
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #101010;
 }
 #scroll-to-top {
   display: none;
@@ -281,7 +284,7 @@ $color-blue-dark: #1C77C3; */
 }
 #scroll-to-top i {
     transition: all 0s;
-    color: #ffffff;
+    color: #F5F7FA;
   }
 #scroll-to-top i:hover {
     opacity: 1;
