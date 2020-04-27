@@ -2,114 +2,156 @@
 <html lang="en">
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-    crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-    crossorigin=""></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
 
-<!-- agregamos la hamburguesa -->
-<link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
-<script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+    <!-- agregamos la hamburguesa -->
+    <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script src="https://cdn.jsdelivr.net/npm/@material/drawer@5.1.0/dist/mdc.drawer.min.js"></script>
-<!-- fin hamburguesa -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://cdn.jsdelivr.net/npm/@material/drawer@5.1.0/dist/mdc.drawer.min.js"></script>
+    <!-- fin hamburguesa -->
 
+
+    <style>
+        #mapid {
+            height: 200px;
+            width: 300px;
+        }
+    </style>
 </head>
 
 <body>
 
-  {% block content %}
+    {% block content %}
 
-  {% include 'layouts/slide-bar.html' %}
+    {% include 'layouts/slide-bar.html' %}
 
-  {% endblock %}
+    {% endblock %}
 
-  <main class="main-content" style="overflow-x: hidden;" id="main-content">
-      <div class="mdc-top-app-bar--fixed-adjust">
+    <main class="main-content" style="overflow-x: hidden;" id="main-content">
+        <div class="mdc-top-app-bar--fixed-adjust">
 
-    <h4> Formulario para publicar animales en la pagina </h4>
+            <h4> Formulario para publicar animales en la pagina </h4>
+
+            <div id="formulario">
+                <!-- onsubmit="subir(this,event)" -->
+                <form method="POST" id="formulario_posteo" enctype="multipart/form-data" action="/formulario_posteo">
+                    {% csrf_token %}
+                    <label for="lname">Descripcion:</label><br>
+                    <input type="text" id="descripcion" name="descripcion"><br>
+
+
+                    <label for="lname">Tipo de animal:</label><br>
+                    <select id="select_animal" name="select_animal">
+                        <option value="Gato">Gato</option>
+                        <option value="Perro" selected>Perro</option>
+                        <option value="Gallo">Gallo</option>
+                    </select><br>
+
+
+                    <label for="lname">Sexo del animal:</label><br>
+                    <select id="select_sexo" name="select_sexo">
+                        <option value="Macho">Macho</option>
+                        <option value="Hembra" selected>Hembra</option>
+                    </select><br>
+
+                    <label for="lname">Edad del animal en meses:</label><br>
+                    <input type="number" id="edad_animal" name="edad_animal"><br>
+
+                    <label for="lname">Numero de teléfono:</label><br>
+                    <input type="text" id="numero_telefono" name="numero_telefono"><br>
+
+                    <label for="lname">Ubicación de la persona </label><br>
+                    <div id="mapid"></div>
+                    <input type="text" id="latitud" name="latitud" placeholder="Latitud"> <br>
+                    <input type="text" id="longitud" name="longitud" placeholder="Longitud"> <br>
+                    <label for="lname">Imagen de la mascota:</label><br>
+                    <input type="file" id="imagen" name="imagen" placeholder="Imagen *">
+                    <input type="submit" value="Subir">
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
+
+        const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+        topAppBar.setScrollTarget(document.getElementById('main-content'));
+        topAppBar.listen('MDCTopAppBar:nav', () => {
+            drawer.open = !drawer.open;
+        });
+
+
+
+
+        $(function() {
  
-  <div id="formulario" >
-    <!-- onsubmit="subir(this,event)" -->
-    <form method="POST" id="formulario_posteo" enctype="multipart/form-data" action="nueva_adopcion">
-      {% csrf_token %}
+  curLocation = [-26.8591, -58.3053];
+  var map = L.map('mapid').setView(curLocation, 10);
 
-      <label for="fname">Nombre:</label><br>
-      <input type="text" id="nombre" name="nombre"><br>
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
 
-      <label for="fname">Apellido:</label><br>
-      <input type="text" id="apellido" name="apellido"><br>
+  map.attributionControl.setPrefix(false);
 
-      <label for="lname">Edad de la persona:</label><br>
-      <input type="number" id="edad" name="edad"><br>
+  var marker = new L.marker(curLocation, {
+    draggable: 'true'
+  });
 
-      <label for="lname">Fecha de adopcion:</label><br>
-      <input type="date" id="fecha" name="fecha"><br>
+  marker.on('dragend', function(event) {
+    var position = marker.getLatLng();
+    marker.setLatLng(position, {
+      draggable: 'true'
+    }).bindPopup(position).update();
+    $("#latitud").val(position.lat);
+    $("#longitud").val(position.lng).keyup();
+  });
 
-      <label for="lname">Descripcion:</label><br>
-      <input type="text" id="descripcion" name="descripcion"><br>
+  $("#Latitude, #Longitude").change(function() {
+    var position = [parseInt($("#Latitude").val()), parseInt($("#Longitude").val())];
+    marker.setLatLng(position, {
+      draggable: 'true'
+    }).bindPopup(position).update();
+    map.panTo(position);
+  });
 
-      <label for="lname">Animal adoptado:</label><br>
-      <select id="select_animal" name="select_animal">
-        <option value="Gato">Gato</option>
-        <option value="Perro" selected>Perro</option>
-        <option value="Gallo">Gallo</option>
-      </select><br>
+  map.addLayer(marker);
+})
+    </script>
 
-      <label for="lname">Sexo del animal:</label><br>
-      <select id="select_sexo" name="select_sexo">
-        <option value="Macho">Macho</option>
-        <option value="Hembra" selected>Hembra</option>
-      </select><br>
-
-      <label for="lname">Edad del animal en meses:</label><br>
-      <input type="number" id="edad_animal" name="edad_animal"><br>
-
-      <label for="lname">Cantidad de mascotas actuales:</label><br>
-      <input type="number" id="cant_animales" name="cant_animales"><br>
-
-      <label for="lname">Imagen de la mascota:</label><br>
-      <input type="file" id="imagen" name="imagen" placeholder="Imagen *">
-      <input type="submit" value="Subir">
-    </form>
-  </div>
-</div>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-    const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
-  
-    const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
-    topAppBar.setScrollTarget(document.getElementById('main-content'));
-    topAppBar.listen('MDCTopAppBar:nav', () => {
-      drawer.open = !drawer.open;
-    });
-  </script>
-  
 </body>
 
 </html>

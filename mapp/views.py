@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse,FileResponse
 from django.urls import reverse
 # Create your views here.
-from .models import Datos
+from .models import Datos,Datos_adopcion
 from django.views.decorators.csrf import csrf_exempt
 import os 
 from django.contrib.auth import authenticate, login,logout
@@ -14,7 +14,6 @@ from mapanimales.settings import MEDIA_URL
 from django.core.files.storage import FileSystemStorage
 # lo que sigue extraemos de flask del proyecto ganaderia
 from mapanimales import settings
-from PIL import Image   #para manejar imagenes
 
 import platform 
 
@@ -47,7 +46,14 @@ def home(request):
     """
     is not necesary to be loged
     """
-    return render( request, 'index.html')
+    datos=Datos_adopcion.objects.all()# de todo esto solo selecionamos los primeros 6 
+    if len(datos)>6: 
+        datos= datos[0:6] # solo los primeros 6
+    dic= {
+        "data":datos
+    }
+    print(dic)
+    return render( request, 'index.html',dic)
 
 def inicio_mapa(request):
     if not request.user.is_authenticated:
@@ -92,9 +98,19 @@ def formulario_posteo(request):
     if not request.user.is_authenticated:
         return render(request,'login.html')
     if request.method=='POST':
-        print('posteo ')
+        posteo=request.POST #caragamos primero aca 
+        print(posteo.get('numero_telefono'))
+        datos_a_guardar= Datos_adopcion(descripcion=posteo.get('descripcion'),animal=posteo.get('select_animal'),sexo=posteo.get('select_sexo'),
+        edad_animal=int(posteo.get('edad_animal')),numero_telefono_persona=str(posteo.get('numero_telefono')),
+        latitud_persona=float(posteo.get('latitud')),longitud_persona=float(posteo.get('longitud'))) # instanciamos la clase Datos
+        
+        imagen=UploadImageForm(request.POST, request.FILES)
+        if imagen.is_valid():
+            datos_a_guardar.imagen=imagen.cleaned_data['imagen']
+            datos_a_guardar.save()
         return render(request,"formulario_posteo.html")
     else: 
+
         return render(request,"formulario_posteo.html")
 
 def solicitud(request):

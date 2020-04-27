@@ -33,13 +33,12 @@ class Datos_adopcion(models.Model):
     para la adopcion disponibles 
     """
     identificativo= models.AutoField(primary_key=True)
-    id= models.CharField(default=0,max_length=40)  
     fecha= models.DateField(default=timezone.now())
     descripcion=models.TextField(max_length=400,default='Sin descripcion')
     animal= models.CharField(max_length=20)# si es gato, perro etc 
     sexo=models.CharField(max_length=20)
     edad_animal=models.IntegerField(default=1)
-    numero_telefono_persona= models.CharField(default='0975209464',max_length=40)
+    numero_telefono_persona= models.IntegerField(default='0975209464')
     latitud_persona=models.FloatField() 
     longitud_persona=models.FloatField()
     imagen=models.ImageField(upload_to = 'images/', default = 'imagenes/None/no-img.jpg')
@@ -49,4 +48,4 @@ class Datos_adopcion(models.Model):
         """
         Para el nombre en el admin de Django
         """
-        return str(self.id) + " ----- "+ str(self.fecha) 
+        return str(self.identificativo) + " ----- "+ str(self.fecha) 
