@@ -13,6 +13,13 @@ Rojo #cf1124*/
     flex-direction: column;
     justify-content: center;
   }
+.alinear {
+  padding-top: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 .content{
     margin-left: auto;
