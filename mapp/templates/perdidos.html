@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <!-- agregamos la hamburguesa -->
+    <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://cdn.jsdelivr.net/npm/@material/drawer@5.1.0/dist/mdc.drawer.min.js"></script>
+    <!-- fin hamburguesa -->
+
+
+    <style>
+        #mapid {
+            height: 480px;
+        }
+    </style>
+</head>
+
+<body>
+    {% block content %}
+
+    {% include 'layouts/slide-bar.html' %}
+
+    {% endblock %}
+    <main class="main-content" style="overflow-x: hidden;" id="main-content">
+        <div class="mdc-top-app-bar--fixed-adjust">
+            <h4>Mapa de los animalitos extraviados</h4>
+            <h5>Permite acceder a tu ubicación para notificarte animalitos perdidos </h5>
+            <div id="mapid"></div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        var x = document.getElementById("demo");
+        var mymap;
+
+
+
+
+
+
+        var mymap = L.map('mapid').setView([-27.55, -55.59], 10);
+        var datos1 = ' ';
+        datos1 = JSON.stringify("{{data|escapejs}}");
+
+        // console.log("antes: " +datos1);
+        datos1 = datos1.replace(/'/g, '"'); // cambiamos todas las '  por " 
+        datos1 = datos1.replace('"', ' '); //sacamos el primer  " 
+        datos1 = datos1.substring(0, datos1.length - 1); // sacamos el ultimo  "
+        var prueba = JSON.parse(datos1);
+
+        datos = prueba;
+        var plano = new Array();
+        var index = 0; //para recorrer la lista
+        var lista_aux = new Array();
+        for (index = 0; index < datos.length; index++) {
+            var ima = '<img src="' + datos[index].url + '"height=50% width=70% >';
+            console.log(ima);
+            lista_aux = ['<h2>N°:' + datos[index].id + '</h2>' + '<h3>' + datos[index].nombre + ' ' + datos[index].apellido + "</h3>" + ' <p>' + datos[index].descripcion + '</p>' + ima, datos[index].ubicacion.latitud, datos[index].ubicacion.longitud];
+            plano.push(lista_aux);// agregamos al array
+        }
+        // console.log(plano);
+
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        for (var i = 0; i < plano.length; i++) {
+            marker = new L.marker([plano[i][1], plano[i][2]])
+                .bindPopup(plano[i][0])
+                .addTo(mymap);
+        }
+
+
+        const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
+        const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+        topAppBar.setScrollTarget(document.getElementById('main-content'));
+        topAppBar.listen('MDCTopAppBar:nav', () => {
+            drawer.open = !drawer.open;
+        });
+
+        //detectar ubicacion
+
+
+        $(document).ready(function () {
+            mymap.locate({ setView: true, maxZoom: 15 });
+        });
+
+        function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+            L.marker(e.latlng).addTo(mymap)
+                .on('click', function () {
+                    confirm("are you sure?");
+                });
+            //.bindPopup("You are within " + radius + " meters from this point").openPopup();
+            L.circle(e.latlng, radius).addTo(mymap);
+        }
+
+        mymap.on('locationfound', onLocationFound);
+
+        function onLocationError(e) {
+            alert(e.message);
+        }
+        mymap.on('locationerror', onLocationError);
+
+
+    </script>
+
+</body>
+
+</html>

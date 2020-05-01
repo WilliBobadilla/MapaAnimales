@@ -73,6 +73,24 @@ def inicio_mapa(request):
     
     return render(request, "mapanuevo.html", data)
 
+def perdidos_mapa(request):
+    datos_adopciones=consulta_datos()
+
+    lista=[ ]
+    for item in datos_adopciones:
+        cada_dato={"id":item.identificativo ,"nombre": item.nombre, "apellido": item.apellido,
+                    "sexo": item.sexo, "animal": item.animal,"descripcion": item.descripcion,
+                      "ubicacion": {"latitud": item.latitud,
+                                     "longitud": item.longitud
+                                    }}
+        lista.append(cada_dato) # agregamos a la lista
+
+    data = {"data": lista} # al final enviamos esto 
+    
+    return render(request, "perdidos.html", data)
+
+
+
 def muestra_datos(request):
     # para ver el mapa de los adoptados no hace falta que estees logueado
     datos_adopciones=consulta_datos()
