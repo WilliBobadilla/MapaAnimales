@@ -12,12 +12,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -27,7 +24,6 @@
     <!-- agregamos la hamburguesa -->
     <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://cdn.jsdelivr.net/npm/@material/drawer@5.1.0/dist/mdc.drawer.min.js"></script>
     <!-- fin hamburguesa -->
@@ -36,6 +32,10 @@
     <style>
         #mapid {
             height: 480px;
+        }
+        .leaflet-popup-close-button{
+            height: 50%;
+            width: 50%;
         }
     </style>
 </head>
@@ -50,6 +50,7 @@
         <div class="mdc-top-app-bar--fixed-adjust">
             <h4>Mapa de los animalitos extraviados</h4>
             <h5>Permite acceder a tu ubicación para notificarte animalitos perdidos </h5>
+            <h5>Cantidad de animalitos encontrados gracias a la plataforma: {{ cant_encontrados}}</h5>
             <div id="mapid"></div>
         </div>
     </main>
@@ -62,32 +63,21 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script>
-        var x = document.getElementById("demo");
-        var mymap;
 
 
+        //parseamos datos desde el back-end
 
-
-
-
-        var mymap = L.map('mapid').setView([-27.55, -55.59], 10);
-        var datos1 = ' ';
-        datos1 = JSON.stringify("{{data|escapejs}}");
-
-        // console.log("antes: " +datos1);
-        datos1 = datos1.replace(/'/g, '"'); // cambiamos todas las '  por " 
-        datos1 = datos1.replace('"', ' '); //sacamos el primer  " 
-        datos1 = datos1.substring(0, datos1.length - 1); // sacamos el ultimo  "
-        var prueba = JSON.parse(datos1);
-
-        datos = prueba;
+        {% autoescape off %}
+        datos = {{ data }}
+        {% endautoescape %}
         var plano = new Array();
         var index = 0; //para recorrer la lista
         var lista_aux = new Array();
+        var mymap = L.map('mapid').setView([-26.873, -58.309], 12);
         for (index = 0; index < datos.length; index++) {
-            var ima = '<img src="' + datos[index].url + '"height=50% width=70% >';
+            var ima = '<img src="' + datos[index].link + '"height=50% width=70% >';
             console.log(ima);
-            lista_aux = ['<h2>N°:' + datos[index].id + '</h2>' + '<h3>' + datos[index].nombre + ' ' + datos[index].apellido + "</h3>" + ' <p>' + datos[index].descripcion + '</p>' + ima, datos[index].ubicacion.latitud, datos[index].ubicacion.longitud];
+            lista_aux = ['<h2>N°:' + datos[index].id + '</h2>' + '<h3>' + datos[index].fecha + '</h3>' + '<h3>Responde al nombre: ' + datos[index].nombre + '</h3>' + '<h4>Contacto: 0' + datos[index].telefono + '</h4>'+ ' <p>' + datos[index].descripcion + '</p>' + ima, datos[index].ubicacion.latitud, datos[index].ubicacion.longitud, datos[index].extraviado];
             plano.push(lista_aux);// agregamos al array
         }
         // console.log(plano);
@@ -98,20 +88,20 @@
         }).addTo(mymap);
 
         for (var i = 0; i < plano.length; i++) {
-            marker = new L.marker([plano[i][1], plano[i][2]])
-                .bindPopup(plano[i][0])
-                .addTo(mymap);
+            if (plano[i][3] == "False") { //significa que no se ha encontrado aun
+                marker = new L.marker([plano[i][1], plano[i][2]])
+                    .bindPopup(plano[i][0])
+                    .addTo(mymap);
+                var circle = L.circle([plano[i][1], plano[i][2]], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 350
+                }).addTo(mymap);
+            }
         }
 
-
-        const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
-        const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
-        topAppBar.setScrollTarget(document.getElementById('main-content'));
-        topAppBar.listen('MDCTopAppBar:nav', () => {
-            drawer.open = !drawer.open;
-        });
-
-        //detectar ubicacion
+        //detectar ubicacion, funciona solo bajo contextos seguros(ssl)
 
 
         $(document).ready(function () {
@@ -127,14 +117,20 @@
             //.bindPopup("You are within " + radius + " meters from this point").openPopup();
             L.circle(e.latlng, radius).addTo(mymap);
         }
-
-        mymap.on('locationfound', onLocationFound);
-
         function onLocationError(e) {
             alert(e.message);
         }
+        mymap.on('locationfound', onLocationFound);
         mymap.on('locationerror', onLocationError);
 
+
+        //slide bar 
+        const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
+        const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+        topAppBar.setScrollTarget(document.getElementById('main-content'));
+        topAppBar.listen('MDCTopAppBar:nav', () => {
+            drawer.open = !drawer.open;
+        });
 
     </script>
 
