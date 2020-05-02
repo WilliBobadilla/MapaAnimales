@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse,FileResponse
 from django.urls import reverse
 # Create your views here.
-from .models import Datos,Datos_adopcion
+from .models import Datos,Datos_adopcion,Datos_extravio
 from django.views.decorators.csrf import csrf_exempt
 import os 
 from django.contrib.auth import authenticate, login,logout
@@ -16,7 +16,7 @@ from django.core.files.storage import FileSystemStorage
 from mapanimales import settings
 
 import platform 
-
+from ipware import get_client_ip  # para manejar las ips, ante la solicitud de un animal perdido
 # total de horas trabajadas hasta el momento: 24 hs
 def solcitud_login(request):
     """
@@ -86,7 +86,18 @@ def perdidos_mapa(request):
         lista.append(cada_dato) # agregamos a la lista
 
     data = {"data": lista} # al final enviamos esto 
-    
+    ip, is_routable = get_client_ip(request)
+    if ip is None:
+        # Unable to get the client's IP address
+        print("no se puede saber ")
+    else:
+        # We got the client's IP address
+        if is_routable:
+            print("la ip es", ip)
+            # The client's IP address is publicly routable on the Internet
+        else:
+            # The client's IP address is private  
+            print("privado")
     return render(request, "perdidos.html", data)
 
 
