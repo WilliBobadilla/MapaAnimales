@@ -30,7 +30,8 @@ urlpatterns = [
     path('logout', views.logout_request),
     path('muestradatos', views.muestra_datos),
     path('formulario_posteo', views.formulario_posteo),
-    path('perdidos',views.perdidos_mapa)
+    path('perdidos',views.perdidos_mapa),
+    path('perdidos_form',views.perdidos_form)
 
 ]
 if settings.DEBUG:

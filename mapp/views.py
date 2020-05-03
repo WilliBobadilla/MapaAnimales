@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse,FileResponse
 from django.urls import reverse
 # Create your views here.
-from .models import Datos,Datos_adopcion
+from .models import Datos,Datos_adopcion,Datos_extravio
 from django.views.decorators.csrf import csrf_exempt
 import os 
 from django.contrib.auth import authenticate, login,logout
@@ -16,7 +16,7 @@ from django.core.files.storage import FileSystemStorage
 from mapanimales import settings
 
 import platform 
-
+from ipware import get_client_ip  # para manejar las ips, ante la solicitud de un animal perdido
 # total de horas trabajadas hasta el momento: 24 hs
 def solcitud_login(request):
     """
@@ -74,20 +74,53 @@ def inicio_mapa(request):
     return render(request, "mapanuevo.html", data)
 
 def perdidos_mapa(request):
-    datos_adopciones=consulta_datos()
-
+    """
+    Vista donde se renderizan en un mapa los animalitos perdidos
+    """
+    datos_adopciones=Datos_extravio.objects.all()
     lista=[ ]
+    cantidad_encontrados= len(Datos_extravio.objects.filter(encontrado=True))
     for item in datos_adopciones:
-        cada_dato={"id":item.identificativo ,"nombre": item.nombre, "apellido": item.apellido,
+        cada_dato={"id":item.identificativo ,"fecha": str(item.fecha), "nombre": item.nombre_animal,
                     "sexo": item.sexo, "animal": item.animal,"descripcion": item.descripcion,
-                      "ubicacion": {"latitud": item.latitud,
-                                     "longitud": item.longitud
+                    "link":item.imagen.url ,"extraviado":str(item.encontrado),
+                    "telefono":item.numero_telefono_persona,"ip":item.ip_dispositivo,                
+                    "ubicacion": {"latitud": item.latitud_perdido,
+                                    "longitud": item.longitud_perdido
                                     }}
         lista.append(cada_dato) # agregamos a la lista
-
-    data = {"data": lista} # al final enviamos esto 
-    
+    data = {"data": lista,"cant_encontrados":cantidad_encontrados} # al final enviamos esto 
     return render(request, "perdidos.html", data)
+
+
+def perdidos_form(request):
+
+    ip, is_routable = get_client_ip(request)
+    if ip is None:
+        # Unable to get the client's IP address
+        print("no se puede saber ")
+    else:
+        # We got the client's IP address
+        if is_routable:
+            print("la ip es", ip)
+            # The client's IP address is publicly routable on the Internet
+        else:
+            # The client's IP address is private  
+            print("privado")
+    if request.method=='POST':
+        posteo=request.POST #caragamos primero aca 
+        datos_a_guardar= Datos_extravio(fecha=posteo.get('fecha'),descripcion=posteo.get('descripcion'),nombre_animal=posteo.get('nombre'), animal=posteo.get('tipo'),sexo=posteo.get('select_sexo'),
+        edad_animal=posteo.get('edad_animal'),numero_telefono_persona=int(posteo.get('numero_telefono')),
+        latitud_perdido=float(posteo.get('latitud')),longitud_perdido=float(posteo.get('longitud')),
+        ip_dispositivo=ip, encontrado=False) # instanciamos la clase Datoserro
+        
+        imagen=UploadImageForm(request.POST, request.FILES)
+        if imagen.is_valid():
+            datos_a_guardar.imagen=imagen.cleaned_data['imagen']
+            datos_a_guardar.save()
+        return render(request, "formulario_perdidos.html")
+    else: 
+        return render(request, "formulario_perdidos.html")
 
 
 
@@ -113,6 +146,10 @@ def muestra_datos(request):
 
 
 def formulario_posteo(request):
+    """
+    Utilizado para publicar nuevos animales \n
+    en la pagina principal 
+    """
     if not request.user.is_authenticated:
         return render(request,'login.html')
     if request.method=='POST':
@@ -128,7 +165,6 @@ def formulario_posteo(request):
             datos_a_guardar.save()
         return render(request,"formulario_posteo.html")
     else: 
-
         return render(request,"formulario_posteo.html")
 
 def solicitud(request):
@@ -184,7 +220,6 @@ def publicar_animal(requests):
     en la pagina principal 
     """
     pass
-
 
 
 def consulta_datos():
