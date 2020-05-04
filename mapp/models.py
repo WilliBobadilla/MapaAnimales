@@ -65,9 +65,10 @@ class Datos_extravio(models.Model):
     latitud_perdido=models.FloatField()  #datos de la ubicacion aproximada de la perdida del animal
     longitud_perdido=models.FloatField()
     imagen=models.ImageField(upload_to = 'images/', default = 'imagenes/None/no-img.jpg')
-    ip_dispositivo=models.CharField(max_length=20)#para saber si es la misma persona que habia subido
+    #ip_dispositivo=models.CharField(max_length=20)#para saber si es la misma persona que habia subido
     encontrado=models.BooleanField()#para indicar si se encontro o no 
-
+    nombre_publicador=models.CharField(max_length=40,default='Juan') #para comprobar luego si es que se encuentra el animal
+    apellido_publicador=models.CharField(max_length=40,default='Perez')
 
     def __str__(self):
         """

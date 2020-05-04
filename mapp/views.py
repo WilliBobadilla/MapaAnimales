@@ -84,7 +84,9 @@ def perdidos_mapa(request):
         cada_dato={"id":item.identificativo ,"fecha": str(item.fecha), "nombre": item.nombre_animal,
                     "sexo": item.sexo, "animal": item.animal,"descripcion": item.descripcion,
                     "link":item.imagen.url ,"extraviado":str(item.encontrado),
-                    "telefono":item.numero_telefono_persona,"ip":item.ip_dispositivo,                
+                    "telefono":item.numero_telefono_persona,  
+                    "nombre":item.nombre_publicador,
+                    "apellido":item.apellido_publicador,              
                     "ubicacion": {"latitud": item.latitud_perdido,
                                     "longitud": item.longitud_perdido
                                     }}
@@ -94,26 +96,18 @@ def perdidos_mapa(request):
 
 
 def perdidos_form(request):
-
-    ip, is_routable = get_client_ip(request)
-    if ip is None:
-        # Unable to get the client's IP address
-        print("no se puede saber ")
-    else:
-        # We got the client's IP address
-        if is_routable:
-            print("la ip es", ip)
-            # The client's IP address is publicly routable on the Internet
-        else:
-            # The client's IP address is private  
-            print("privado")
+    """
+    vista donde se maneja el post, se debe estar logueado
+    """
+    if not request.user.is_authenticated:
+        return render(request,'login.html')
     if request.method=='POST':
-        posteo=request.POST #caragamos primero aca 
+        posteo=request.POST #cargamos primero aca 
         datos_a_guardar= Datos_extravio(fecha=posteo.get('fecha'),descripcion=posteo.get('descripcion'),nombre_animal=posteo.get('nombre'), animal=posteo.get('tipo'),sexo=posteo.get('select_sexo'),
         edad_animal=posteo.get('edad_animal'),numero_telefono_persona=int(posteo.get('numero_telefono')),
         latitud_perdido=float(posteo.get('latitud')),longitud_perdido=float(posteo.get('longitud')),
-        ip_dispositivo=ip, encontrado=False) # instanciamos la clase Datoserro
-        
+         encontrado=False,nombre_publicador=request.user.first_name,
+         apellido_publicador= request.user.last_name) #  instanciamos la clase Datos_extravio
         imagen=UploadImageForm(request.POST, request.FILES)
         if imagen.is_valid():
             datos_a_guardar.imagen=imagen.cleaned_data['imagen']
@@ -169,7 +163,7 @@ def formulario_posteo(request):
 
 def solicitud(request):
     """
-    solicitud ajax para verificar id
+    vista donde se procesa datos de un nuevo animal adoptado
     """
     if not request.user.is_authenticated:
         return render(request,'login.html')

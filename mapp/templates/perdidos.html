@@ -58,7 +58,8 @@
                 <h5 style="color: #F5F7FA;">Cantidad de animalitos encontrados gracias a la plataforma: {{ cant_encontrados}}</h5>
             </div>
             <div style="margin: 50px; margin-top: 25px;" id="mapid"></div>
-            
+            <h5 style="display: none" id="nombre"> {{ request.user.first_name}} </h5>
+            <h5 style="display: none" id="apellido"> {{ request.user.last_name}} </h5>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -70,8 +71,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script>
-
-
         //parseamos datos desde el back-end
 
         {% autoescape off %}
@@ -81,10 +80,23 @@
         var index = 0; //para recorrer la lista
         var lista_aux = new Array();
         var mymap = L.map('mapid').setView([-26.873, -58.309], 12);
+        //var apellido=document.getElementById("apellido").textContent.toString() //sacamos el apellido actual del user registrado
+        var nombre=document.getElementById("nombre").textContent.toString()
+     
+        console.log("actual usuario: "+nombre+apellido)
         for (index = 0; index < datos.length; index++) {
+            console.log("cada uno "+ index + datos[index].nombre + datos[index].apellido)
+            if ( nombre==datos[index].nombre.toString())
+            {
+                var confirmacion ="<button > SI </button> <button>NO </button>";
+                console.log("crack sos el que publico esto")
+            }else{
+                var confirmacion=" ";
+                console.log("NOO")
+            }
             var ima = '<img src="' + datos[index].link + '"height=50% width=70% >';
             console.log(ima);
-            lista_aux = ['<h2>N°:' + datos[index].id + '</h2>' + '<h3>' + datos[index].fecha + '</h3>' + '<h3>Responde al nombre: ' + datos[index].nombre + '</h3>' + '<h4>Contacto: 0' + datos[index].telefono + '</h4>'+ ' <p>' + datos[index].descripcion + '</p>' + ima, datos[index].ubicacion.latitud, datos[index].ubicacion.longitud, datos[index].extraviado];
+            lista_aux = ['<h2>N°:' + datos[index].id + '</h2>' + '<h3>' + datos[index].fecha + '</h3>' + '<h3>Responde al nombre: ' + datos[index].nombre + '</h3>' + '<h4>Contacto: 0' + datos[index].telefono + '</h4>'+ ' <p>' + datos[index].descripcion + '</p>' + ima+confirmacion, datos[index].ubicacion.latitud, datos[index].ubicacion.longitud, datos[index].extraviado];
             plano.push(lista_aux);// agregamos al array
         }
         // console.log(plano);
