@@ -7,3 +7,4 @@ python-dotenv==0.10.3
 dj_database_url
 Pillow==7.1.1
 django-ipware
+social-auth-app-django

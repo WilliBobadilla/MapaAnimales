@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include 
 from mapp import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,7 +31,9 @@ urlpatterns = [
     path('muestradatos', views.muestra_datos),
     path('formulario_posteo', views.formulario_posteo),
     path('perdidos',views.perdidos_mapa),
-    path('perdidos_form',views.perdidos_form)
+    path('perdidos_form',views.perdidos_form),
+  path('', include('social_django.urls', namespace='social')),
+
 
 ]
 if settings.DEBUG:

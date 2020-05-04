@@ -43,8 +43,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mapp'
+    'mapp', 
+    'social_django',
 ]
+
+AUTHENTICATION_BACKENDS = (
+  
+   'social_core.backends.google.GoogleOAuth2',
+   'django.contrib.auth.backends.ModelBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,6 +83,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mapanimales.wsgi.application'
+TEMPLATE_CONTEXT_PROCESSORS = (
+   'django.contrib.auth.context_processors.auth',
+   'django.core.context_processors.debug',
+   'django.core.context_processors.i18n',
+   'django.core.context_processors.media',
+   'django.core.context_processors.static',
+   'django.core.context_processors.tz',
+   'django.contrib.messages.context_processors.messages',
+   'social.apps.django_app.context_processors.backends',
+   'social.apps.django_app.context_processors.login_redirect',
+)
 
 
 # Database
@@ -152,4 +170,17 @@ STATIC_URL = '/static/'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/inicio'
+
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/auth/login/google-oauth2/'
+
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+#817360624013-at2a0rl9ncin77kvbdudsf88dbv1m8al.apps.googleusercontent.com
+#F1EAJ1JaarfTose9FdUrmach
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '817360624013-at2a0rl9ncin77kvbdudsf88dbv1m8al.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'F1EAJ1JaarfTose9FdUrmach'
+
+#https://dev.to/codetricity/how-to-set-up-django-with-central-oauth2-login-1co
+
