@@ -35,6 +35,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="https://cdn.jsdelivr.net/npm/@material/drawer@5.1.0/dist/mdc.drawer.min.js"></script>
 <!-- fin hamburguesa -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700, 900|Vollkorn:400i" rel="stylesheet">
+    <link href="/static/style/style.css" rel="stylesheet" type="text/css">
 
 
   <style>
@@ -54,12 +56,12 @@
 
   <main class="main-content" style="overflow-x: hidden;" id="main-content">
       <div class="mdc-top-app-bar--fixed-adjust">
-
+        <div class="alinear">
+          <h1 style="color: #F5F7FA;">Formulario y mapa de los animales adoptados</h1>
+          
+      </div>
+      <div style="margin: 50px; margin-top: 25px;" id="mapid"></div>
  
-    <h4> Formulario y mapa de los animales adoptados </h4>
- 
-
-  <div id="mapid"></div>
   <div id="formulario" style="display:none ">
     <!-- onsubmit="subir(this,event)" -->
     <form method="POST" id="formulario" enctype="multipart/form-data" action="nueva_adopcion">

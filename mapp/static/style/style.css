@@ -160,4 +160,51 @@ body {
     background-color: var(--loginSubmitHoverBackgroundColor);
   }
   
+/*  
+#formulario_posteo {
+  padding-top: 25px;
+  padding-left: 50px;
+}
+
+#formulario_posteo label{
  
+    padding-top: 1.25rem;
+    
+    padding-bottom: 1.25rem;
+}
+
+#formulario_posteo input[type='text'] {
+  border-radius: 10px;
+  background-color: var(--loginInputBackgroundColor);
+  padding-left: 10px;
+  height: 25px;
+}
+
+
+#descripcion{
+  color: #F5F7FA;
+}
+
+#opciones{
+  border-radius: 10px;
+  background-color: var(--loginInputBackgroundColor);
+  min-width: 5rem;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #F5F7FA;
+  border:none ;
+  height: 25px;
+}
+
+#enviar {
+  margin-top: 10px;
+  background-color: var(--loginSubmitBackgroundColor);
+  color: var(--loginSubmitColor);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+#enviar input:focus,
+#enviar input:hover {
+  background-color: var(--loginSubmitHoverBackgroundColor);
+} */
