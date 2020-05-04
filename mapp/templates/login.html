@@ -21,78 +21,87 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://cdn.jsdelivr.net/npm/@material/drawer@5.1.0/dist/mdc.drawer.min.js"></script>
 	<!-- fin hamburguesa -->
-	
+
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700, 900|Vollkorn:400i" rel="stylesheet">
-  
+
 
 </head>
 
 
-	{% block content %}
+{% block content %}
 
-	{% include 'layouts/slide-bar.html' %}
+{% include 'layouts/slide-bar.html' %}
 
-	{% endblock %}
-	<main class="main-content" style="overflow-x: hidden;" id="main-content">
-		<div class="mdc-top-app-bar--fixed-adjust">
+{% endblock %}
+<main class="main-content" style="overflow-x: hidden;" id="main-content">
+	<div class="mdc-top-app-bar--fixed-adjust">
 
 
-			<div class="align" >
-				<div id="content">
+		<div class="align">
+			<div id="content">
 
-					<form action="solicitud_login" method="POST" class="form login" name="logueo">
-						{% csrf_token %}
+				<form action="solicitud_login" method="POST" class="form login" name="logueo">
+					{% csrf_token %}
 
-						<div class="form__field">
+					<div class="form__field">
 
-							<label for="login__username">
-								<i class="fa fa-user" style="font-size: 1.5rem;"></i>
-								<span class="hidden">Usuario</span>
-							</label>
+						<label for="login__username">
+							<i class="fa fa-user" style="font-size: 1.5rem;"></i>
+							<span class="hidden">Usuario</span>
+						</label>
 
-							<input id="login__username" type="text" name="username" class="form__input"
-								placeholder="Username" required>
+						<input id="login__username" type="text" name="username" class="form__input"
+							placeholder="Username" required>
 
-						</div>
+					</div>
 
-						<div class="form__field">
+					<div class="form__field">
 
-							<label for="login__password">
-								<i class="fa fa-lock" style="font-size: 1.5rem;"></i>
-								<span class="hidden">Password</span></label>
-							<input id="login__password" type="password" name="password" class="form__input"
-								placeholder="Password" required>
+						<label for="login__password">
+							<i class="fa fa-lock" style="font-size: 1.5rem;"></i>
+							<span class="hidden">Password</span></label>
+						<input id="login__password" type="password" name="password" class="form__input"
+							placeholder="Password" required>
 
-						</div>
+					</div>
 
-						<div class="form__field">
-							<input type="submit" name="Enviar" value="Ingresar">
-							
-							
-						</div>
-						<div>
-							<a class="btn btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">
-								Loginnn
-								</a>
-						</div>
-						
-					</form>
+					<div class="form__field">
+						<input type="submit" name="Enviar" value="Ingresar">
 
-				</div>
+					</div>
+					
+
+					</div>
+					<div>
+
+					</div>
+
+				</form>
+				<div class="button-class">
+					
+						<a class="btn btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">
+							Ingresar con Google 
+						</a>
+					
 			</div>
 		</div>
-	</main>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script>
-		const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
-		const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
-		topAppBar.setScrollTarget(document.getElementById('main-content'));
-		topAppBar.listen('MDCTopAppBar:nav', () => {
-			drawer.open = !drawer.open;
-		});
-	</script>
+	</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+
+<script>
+	const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
+	const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+	topAppBar.setScrollTarget(document.getElementById('main-content'));
+	topAppBar.listen('MDCTopAppBar:nav', () => {
+		drawer.open = !drawer.open;
+	});
+</script>
 
 </body>
 
