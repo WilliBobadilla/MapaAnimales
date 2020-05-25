@@ -1,0 +1,11 @@
+{
+  "name": "AdoptaApp",
+  "version": "1.0.0",
+  "description": "Aplicacion para informacion general sobre animales rescatados y adoptados",
+  "main": "index.js",
+  "author": "Williams Bobadilla",
+  "license": "GPL",
+  "dependencies": {
+    "serve": "^11.1.0"
+  }
+}
