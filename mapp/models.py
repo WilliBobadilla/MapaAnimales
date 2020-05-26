@@ -16,7 +16,7 @@ class Datos(models.Model):
     cant_animales= models.IntegerField()# cantidad de mascotas actuales 
     latitud= models.FloatField()
     longitud= models.FloatField()
-    imagen=models.ImageField(upload_to = 'images/', default = 'imagenes/None/no-img.jpg')
+    imagen=models.ImageField(upload_to = 'images/', default = 'images/None/no-img.jpg')
 
     def __str__(self):
         """
@@ -39,7 +39,7 @@ class Datos_adopcion(models.Model):
     numero_telefono_persona= models.IntegerField(default='0975209464')
     latitud_persona=models.FloatField() 
     longitud_persona=models.FloatField()
-    imagen=models.ImageField(upload_to = 'images/', default = 'imagenes/None/no-img.jpg')
+    imagen=models.ImageField(upload_to = 'images/', default = 'images/None/no-img.jpg')
 
 
     def __str__(self):
@@ -64,7 +64,7 @@ class Datos_extravio(models.Model):
     numero_telefono_persona= models.IntegerField(default=' ')
     latitud_perdido=models.FloatField()  #datos de la ubicacion aproximada de la perdida del animal
     longitud_perdido=models.FloatField()
-    imagen=models.ImageField(upload_to = 'images/', default = 'imagenes/None/no-img.jpg')
+    imagen=models.ImageField(upload_to = 'images/', default = 'images/None/no-img.jpg')
     #ip_dispositivo=models.CharField(max_length=20)#para saber si es la misma persona que habia subido
     encontrado=models.BooleanField()#para indicar si se encontro o no 
     nombre_publicador=models.CharField(max_length=40,default='Juan') #para comprobar luego si es que se encuentra el animal

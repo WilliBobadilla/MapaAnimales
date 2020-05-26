@@ -121,27 +121,63 @@
         }
 
         //detectar ubicacion, funciona solo bajo contextos seguros(ssl)
+        $(function () {
+
+        curLocation = [-26.67, -55.67]
+        var map = L.map('mapid').setView(curLocation, 13);
+        var marker2 = new L.marker(curLocation, {
+            draggable: 'true'
+        });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                latit = position.coords.latitude;
+                longit = position.coords.longitude;
+                actual = [latit, longit];
+                // this is just a marker placed in that position
+                var abc = L.marker(actual,{icon: greenIcon}).addTo(map);
+                // move the map to have the location in its center
+                map.panTo(new L.LatLng(latit, longit));
+                actualizar_pos(actual)
+            })
+        }else{
+            alert("No es soportado la localizacion")
+            actualizar_pos([-26.85992,-58.30883])
+
+        }
+        //curLocation = [-25.677, -55.56];
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        map.attributionControl.setPrefix(false);
+       
+        function actualizar_pos(coordenadas) {
+            marker2.setLatLng(coordenadas);
+            map.addLayer(marker2);
+            var position = marker2.getLatLng();
+            marker2.setLatLng(position, {
+                draggable: 'true'
+            }).bindPopup(position).update();
+            $("#latitud").val(position.lat);
+            $("#longitud").val(position.lng).keyup();
+
+        }
+   
 
 
-        $(document).ready(function () {
-            mymap.locate({ setView: true, maxZoom: 15 });
+        //esto es para que ya setee el 
+        marker2.on('dragend', function (event) {
+            var position = marker2.getLatLng();
+            marker2.setLatLng(position, {
+                draggable: 'true'
+            }).bindPopup(position).update();
+            $("#latitud").val(position.lat);
+            $("#longitud").val(position.lng).keyup();
         });
 
-        function onLocationFound(e) {
-            var radius = e.accuracy / 2;
-            L.marker(e.latlng).addTo(mymap)
-                .on('click', function () {
-                    confirm("are you sure?");
-                });
-            //.bindPopup("You are within " + radius + " meters from this point").openPopup();
-            L.circle(e.latlng, radius).addTo(mymap);
-        }
-        function onLocationError(e) {
-            alert(e.message);
-        }
-        mymap.on('locationfound', onLocationFound);
-        mymap.on('locationerror', onLocationError);
 
+    })
 
         //slide bar 
         const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));

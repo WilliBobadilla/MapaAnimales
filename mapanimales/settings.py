@@ -115,7 +115,8 @@ if plataforma.find('aws')>=0: # esta en la nube
     #  )
 
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
+    SECURE_SSL_REDIRECT = True # [1]
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 else:
     # this is for local deploy

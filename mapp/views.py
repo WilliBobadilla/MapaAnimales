@@ -137,7 +137,15 @@ def muestra_datos(request):
     
     return render(request, "muestra.html", data) 
 
-
+def para_adopcion(request):
+    datos=Datos_adopcion.objects.all()# de todo esto solo selecionamos los primeros 6 
+    if len(datos)>6: 
+        datos= datos[0:6] # solo los primeros 6
+    dic= {
+        "data":datos
+    }
+    print(dic)
+    return render(request,'para_adopcion.html',dic)
 
 def formulario_posteo(request):
     """

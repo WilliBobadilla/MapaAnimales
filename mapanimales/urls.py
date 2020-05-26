@@ -30,6 +30,7 @@ urlpatterns = [
     path('logout', views.logout_request),
     path('muestradatos', views.muestra_datos),
     path('formulario_posteo', views.formulario_posteo),
+    path('para_adopcion', views.para_adopcion),
     path('perdidos',views.perdidos_mapa),
     path('perdidos_form',views.perdidos_form),
   path('', include('social_django.urls', namespace='social')),
