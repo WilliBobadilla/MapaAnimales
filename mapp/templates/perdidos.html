@@ -123,8 +123,8 @@
         //detectar ubicacion, funciona solo bajo contextos seguros(ssl)
       
 
-        curLocation = [-26.67, -55.67]
-        var map = L.map('mapid').setView(curLocation, 13);
+        //curLocation = [-26.67, -55.67]
+        //var map = L.map('mapid').setView(curLocation, 13);
         var marker2 = new L.marker(curLocation, {
             draggable: 'true'
         });
@@ -134,9 +134,9 @@
                 longit = position.coords.longitude;
                 actual = [latit, longit];
                 // this is just a marker placed in that position
-                var abc = L.marker(actual,{icon: greenIcon}).addTo(map);
+                var abc = L.marker(actual).addTo(mymap);
                 // move the map to have the location in its center
-                map.panTo(new L.LatLng(latit, longit));
+                mymap.panTo(new L.LatLng(latit, longit));
                 actualizar_pos(actual)
             })
         }else{
@@ -146,15 +146,15 @@
         }
         //curLocation = [-25.677, -55.56];
 
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+      //  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+       //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+       // }).addTo(map);
 
-        map.attributionControl.setPrefix(false);
+        mymap.attributionControl.setPrefix(false);
        
         function actualizar_pos(coordenadas) {
             marker2.setLatLng(coordenadas);
-            map.addLayer(marker2);
+            mymap.addLayer(marker2);
             var position = marker2.getLatLng();
             marker2.setLatLng(position, {
                 draggable: 'true'
